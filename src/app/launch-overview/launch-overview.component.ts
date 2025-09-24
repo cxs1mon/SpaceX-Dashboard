@@ -21,7 +21,7 @@ export class LaunchOverviewComponent {
   launches: any[] = [];
   searchTerm: string = '';
   searchYear: string = '';
-  searchStatus: string = '';
+  searchSort: string = 'asc';
 
   private service = inject(LaunchService)
 
@@ -59,6 +59,14 @@ export class LaunchOverviewComponent {
         l.name.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
         l.date_utc.includes(this.searchYear)
       );
+    }
+  }
+
+  onSortChange() {
+    if (this.searchSort === 'desc') {
+      this.launches = [...this.launches].reverse();
+    } else {
+      this.launches = [...this.launches].reverse();
     }
   }
 }
