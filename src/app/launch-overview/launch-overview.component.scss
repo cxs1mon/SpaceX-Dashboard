@@ -1,0 +1,92 @@
+.launches__card {
+  width: 28%;
+  height: 300px;
+  border-radius: 15px;
+  background-color: #fdfefe;
+  box-shadow: -10px 10px 15px #c5c5c5;
+  margin: 15px 0;
+  padding: 10px;
+}
+
+.launches {
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5%;
+}
+
+.launches__name {
+  font-weight: 700;
+}
+
+section {
+  padding: 20px 10%;
+}
+
+.launches__details {
+  font-size: 12px;
+  color: gray;
+}
+
+.c-launches__status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  justify-content: flex-start;
+}
+
+.launches__status {
+  border-radius: 15px;
+  font-size: 12px;
+  width: fit-content;
+  padding: 5px;
+  margin: 5px;
+}
+
+.launches__status--successful {
+  background-color: #aae481;
+}
+
+.launches__status--unsuccessful {
+  background-color: #ea6c6c;
+}
+
+.launches__status--flight {
+  background-color: white;
+  border: 1px solid gray;
+}
+.launches__status--upcoming {
+  background-color: #a16cea;
+}
+
+
+.search{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid whitesmoke;
+  border-radius: 20px;
+  padding: 5px 30px;
+  box-shadow: -10px 10px 15px #c5c5c5;
+  margin-bottom: 20px;
+}
+#s-name, #s-year, #s-status, #s-sort, #s-fav{
+  width: 110px;
+  border-width: 1px;
+  background-color: #fbfbfb;
+  padding: 10px 5px;
+  border-radius: 10px;
+  color: black;
+  margin-top: 10px;
+}
+#s-sort{
+  width: 140px;
+}
+
+.search label{
+  font-size: 14px;
+}

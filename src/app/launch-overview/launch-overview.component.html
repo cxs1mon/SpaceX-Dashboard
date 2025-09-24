@@ -1,0 +1,62 @@
+<section>
+  <h2>Launches</h2>
+
+  <div class="search">
+  <p>
+    <label for="s-name">Suche</label> <br>
+    <input id="s-name" type="text" [(ngModel)]="searchTerm" placeholder="z.B. Starlink"/>
+  </p>
+  <p>
+    <label for="s-year">Jahr</label> <br>
+    <input id="s-year" type="number" [(ngModel)]="searchYear" placeholder="z.B. 1997"/>
+  </p>
+  <p>
+    <label for="s-status">Status</label> <br>
+    <select id="s-status">
+      <option>Alle</option>
+      <option>Success</option>
+      <option>Failure</option>
+      <option>Upcoming</option>
+    </select>
+  </p>
+  <p>
+    <label for="s-sort">Sortierung Datum</label> <br>
+    <select id="s-sort">
+      <option>Aufsteigend</option>
+      <option>Absteigend</option>
+    </select>
+  </p>
+  <p>
+    <label for="s-fav">Favoriten</label> <br>
+    <select id="s-fav">
+      <option>Alle</option>
+      <option>Favoriten</option>
+    </select>
+  </p>
+  </div>
+  <div class="launches">
+    <div *ngFor="let l of filteredLaunches()" class="launches__card">
+      <p class="launches__name">{{ l.name }}</p>
+      <p class="launches__details">{{ l.rocketName || 'lädt...' }} &#8226; {{ l.launchpadName || 'lädt...' }}
+        &#8226; {{ l.launchpadLocation || 'lädt...' }} &#8226; {{
+          l.date_utc
+            ? (l.date_utc | date:'yyyy-MM-dd HH:mm':'UTC') + ' UTC'
+            : 'null'
+        }} </p>
+      <div class="c-launches__status">
+        <p *ngIf="l.success === true" class="launches__status launches__status--successful">
+          Success
+        </p>
+        <p *ngIf="l.success === false" class="launches__status launches__status--unsuccessful">
+          Failure
+        </p>
+        <p *ngIf="l.success === null && l.upcoming === true" class="launches__status launches__status--upcoming">
+          <span *ngIf="l.upcoming">Upcoming</span>
+        </p>
+        <p *ngIf="l.success === null && l.upcoming === null" class="launches__status launches__status--upcoming">
+        </p>
+        <p class="launches__status launches__status--flight">#Flight{{ l.flight_number || 'lädt...' }}</p>
+      </div>
+    </div>
+  </div>
+</section>
