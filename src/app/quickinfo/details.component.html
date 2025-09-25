@@ -1,0 +1,60 @@
+<section>
+  <h1>Details View</h1>
+  <h2>{{launch.name|| 'lädt...'}}</h2>
+  <p class="launches__details">{{ rocket.name || 'lädt...' }} &#8226; {{ launchpad.name || 'lädt...' }}
+    &#8226; {{ launchpad.region || 'lädt...' }} &#8226; {{
+      launch.date_utc
+        ? (launch.date_utc | date:'yyyy-MM-dd HH:mm':'UTC') + ' UTC'
+        : 'null'
+    }} </p>
+  <div class="c-launches__status">
+    <p *ngIf="launch.success === true" class="launches__status launches__status--successful">
+      Success
+    </p>
+    <p *ngIf="launch.success === false" class="launches__status launches__status--unsuccessful">
+      Failure
+    </p>
+    <p *ngIf="launch.success === null && launch.upcoming === true" class="launches__status launches__status--upcoming">
+      <span *ngIf="launch.upcoming">Upcoming</span>
+    </p>
+    <p *ngIf="launch.success === null && launch.upcoming === null" class="launches__status launches__status--upcoming">
+    </p>
+    <p class="launches__status launches__status--flight">#Flight{{ launch.flight_number || 'lädt...' }}</p>
+
+    <p class="launches__status launches__status--payloads">Payloads: {{ launch.payloads.length || 'lädt...' }}</p>
+
+    <p *ngIf="launch.cores[0].reused === true" class="launches__status launches__status--reflight">
+      Reflight
+    </p>
+    <p *ngIf="launch.cores[0].reused === false" class="launches__status launches__status--reflight">
+      Not Reflight
+    </p>
+  </div>
+
+  <nav class="tabs">
+    <button class="tabs__button" (click)="setTab('overview')" [class.active]="activeTab === 'overview'">Übersicht</button>
+    <button class="tabs__button" (click)="setTab('payloads')" [class.active]="activeTab === 'payloads'">Payloads</button>
+    <button class="tabs__button" (click)="setTab('links')" [class.active]="activeTab === 'links'">Links</button>
+  </nav>
+
+  <div class="tab-content">
+    <ng-container [ngSwitch]="activeTab">
+
+      <div *ngSwitchCase="'overview'">
+        <h3>Übersicht</h3>
+        <p>{{launch.details}}</p>
+      </div>
+
+      <div *ngSwitchCase="'payloads'">
+        <h3>Payloads</h3>
+        <p>Placeholder for Payloads</p>
+      </div>
+
+      <div *ngSwitchCase="'links'">
+        <h3>Links</h3>
+        <p>Placeholder for wikipedia and youtube links etc.</p>
+      </div>
+
+    </ng-container>
+  </div>
+</section>

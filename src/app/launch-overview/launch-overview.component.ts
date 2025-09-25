@@ -1,6 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Subscription} from 'rxjs';
+import { Router } from '@angular/router';
 import {LaunchService} from '../service/launch.service';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -25,7 +24,7 @@ export class LaunchOverviewComponent {
 
   private service = inject(LaunchService)
 
-  constructor(private launchService: LaunchService) {
+  constructor(private launchService: LaunchService, private router: Router) {
   }
 
   ngOnInit() {
@@ -68,5 +67,10 @@ export class LaunchOverviewComponent {
     } else {
       this.launches = [...this.launches].reverse();
     }
+  }
+
+  goToDetailsView(launch: any) {
+    this.router.navigate(['/details', launch.id]);
+    console.log('Go to Details View');
   }
 }

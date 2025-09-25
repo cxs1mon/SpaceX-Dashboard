@@ -35,7 +35,7 @@
   </p>
   </div>
   <div class="launches">
-    <div *ngFor="let l of filteredLaunches()" class="launches__card">
+    <div *ngFor="let l of filteredLaunches()" class="launches__card" (click)="goToDetailsView(l)">
       <p class="launches__name">{{ l.name }}</p>
       <p class="launches__details">{{ l.rocketName || 'lädt...' }} &#8226; {{ l.launchpadName || 'lädt...' }}
         &#8226; {{ l.launchpadLocation || 'lädt...' }} &#8226; {{

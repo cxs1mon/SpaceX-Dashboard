@@ -24,4 +24,9 @@ export class LaunchService {
   getLaunchpad(id: string): Observable<any> {
     return this.http.get<any>(`${this.launchpadUrl}${id}`);
   }
+
+  getLaunchById(id: string):Observable<any> {
+    return this.http.get<any>(`${this.launchesUrl}${id}`);
+
+  }
 }

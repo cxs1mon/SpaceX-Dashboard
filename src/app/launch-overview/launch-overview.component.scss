@@ -47,19 +47,24 @@ section {
 }
 
 .launches__status--successful {
-  background-color: #aae481;
+  background-color: #d9ffbe;
 }
 
 .launches__status--unsuccessful {
-  background-color: #ea6c6c;
+  background-color: #ffa1a1;
 }
 
 .launches__status--flight {
   background-color: white;
   border: 1px solid gray;
 }
+
+.launches__status--reflight {
+  background-color: white;
+  border: 1px solid gray;
+}
 .launches__status--upcoming {
-  background-color: #a16cea;
+  background-color: #cca8ff;
 }
 
 

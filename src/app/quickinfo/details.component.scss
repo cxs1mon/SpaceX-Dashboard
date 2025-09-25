@@ -1,0 +1,53 @@
+section {
+  padding: 20px 10%;
+}
+
+.launches__details {
+  font-size: 12px;
+  color: gray;
+}
+
+.c-launches__status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  justify-content: flex-start;
+}
+
+.launches__status {
+  border-radius: 15px;
+  font-size: 12px;
+  width: fit-content;
+  padding: 5px;
+  margin: 5px;
+}
+
+.launches__status--successful {
+  background-color: #d9ffbe;
+}
+
+.launches__status--unsuccessful {
+  background-color: #ffa1a1;
+}
+
+.launches__status--flight,
+.launches__status--payloads,
+.launches__status--reflight {
+  background-color: white;
+  border: 1px solid gray;
+}
+
+.launches__status--upcoming {
+  background-color: #cca8ff;
+}
+
+.tabs__button {
+  margin: 20px 10px 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: #5f59ff;
+  background: linear-gradient(110deg, rgba(89, 255, 249, 1) 15%, rgba(214, 171, 255, 1) 75%);
+  border: none;
+  font-weight: 700;
+}

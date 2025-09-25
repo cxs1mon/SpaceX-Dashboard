@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {QuickinfoComponent} from './quickinfo/quickinfo.component';
-import {LaunchOverviewComponent} from './launch-overview/launch-overview.component';
 import {HeaderComponent} from './header/header.component';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [QuickinfoComponent, LaunchOverviewComponent, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
