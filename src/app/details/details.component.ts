@@ -1,7 +1,6 @@
 import {Component, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DatePipe, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
 import {LaunchService} from '../service/launch.service';
 
 @Component({
@@ -10,7 +9,8 @@ import {LaunchService} from '../service/launch.service';
     DatePipe,
     NgIf,
     NgSwitch,
-    NgSwitchCase
+    NgSwitchCase,
+    NgForOf
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -19,10 +19,11 @@ export class DetailsComponent {
   launch: any;
   launchpad: any;
   rocket: any;
+  payloads: any[] = [];
 
   private service = inject(LaunchService)
 
-  constructor(private launchService: LaunchService, private route: ActivatedRoute) {
+  constructor(private launchService: LaunchService, private route: ActivatedRoute, private router: Router) {
   }
 
   activeTab: 'overview' | 'payloads' | 'links' = 'overview';
@@ -42,11 +43,23 @@ export class DetailsComponent {
           this.launchpad = data;
           console.log(data);
         })
+        if (this.launch.payloads?.length) {
+          this.launch.payloads.forEach((payloadId: string) => {
+            this.launchService.getPayload(payloadId).subscribe(p => {
+              this.payloads.push(p);
+            });
+          });
+        }
       })
     }
   }
 
   setTab(tab: 'overview' | 'payloads' | 'links') {
     this.activeTab = tab;
+  }
+
+  goToDetailsView() {
+    this.router.navigate(['/']);
+    console.log('Go to Details View');
   }
 }

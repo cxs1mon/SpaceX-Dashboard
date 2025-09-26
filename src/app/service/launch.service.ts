@@ -9,7 +9,7 @@ export class LaunchService {
   private launchesUrl = 'https://api.spacexdata.com/v4/launches/';
   private rocketsUrl = 'https://api.spacexdata.com/v4/rockets/';
   private launchpadUrl = 'https://api.spacexdata.com/v4/launchpads/';
-  private payloadUrl = 'https://api.spacexdata.com/v4/payloads/';
+    private payloadUrl = 'https://api.spacexdata.com/v4/payloads/';
 
   constructor(private http: HttpClient) {}
 
@@ -28,5 +28,9 @@ export class LaunchService {
   getLaunchById(id: string):Observable<any> {
     return this.http.get<any>(`${this.launchesUrl}${id}`);
 
+  }
+
+  getPayload(id: string):Observable<any> {
+    return this.http.get<any>(`${this.payloadUrl}${id}`);
   }
 }

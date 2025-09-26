@@ -1,13 +1,14 @@
-<section>
+<section class="details">
+  <button class="details__back-btn" (click)="goToDetailsView()">< Back</button>
   <h1>Details View</h1>
-  <h2>{{launch.name|| 'lädt...'}}</h2>
+  <h2>{{ launch.name || 'lädt...' }}</h2>
   <p class="launches__details">{{ rocket.name || 'lädt...' }} &#8226; {{ launchpad.name || 'lädt...' }}
     &#8226; {{ launchpad.region || 'lädt...' }} &#8226; {{
       launch.date_utc
         ? (launch.date_utc | date:'yyyy-MM-dd HH:mm':'UTC') + ' UTC'
         : 'null'
     }} </p>
-  <div class="c-launches__status">
+  <div class="details__launches">
     <p *ngIf="launch.success === true" class="launches__status launches__status--successful">
       Success
     </p>
@@ -32,8 +33,10 @@
   </div>
 
   <nav class="tabs">
-    <button class="tabs__button" (click)="setTab('overview')" [class.active]="activeTab === 'overview'">Übersicht</button>
-    <button class="tabs__button" (click)="setTab('payloads')" [class.active]="activeTab === 'payloads'">Payloads</button>
+    <button class="tabs__button" (click)="setTab('overview')" [class.active]="activeTab === 'overview'">Übersicht
+    </button>
+    <button class="tabs__button" (click)="setTab('payloads')" [class.active]="activeTab === 'payloads'">Payloads
+    </button>
     <button class="tabs__button" (click)="setTab('links')" [class.active]="activeTab === 'links'">Links</button>
   </nav>
 
@@ -42,17 +45,47 @@
 
       <div *ngSwitchCase="'overview'">
         <h3>Übersicht</h3>
-        <p>{{launch.details}}</p>
+        <p>{{ launch.details || 'No Information found about this flight.' }}</p>
       </div>
 
       <div *ngSwitchCase="'payloads'">
         <h3>Payloads</h3>
-        <p>Placeholder for Payloads</p>
+        <div *ngFor="let payload of payloads" class="payload-card">
+          <p>{{payload.name}}</p>
+          <p>Type: {{ payload.type }}</p>
+          <p *ngFor="let n of payload.nationalities">Nationality: {{ n }}</p>
+          <p>Orbit: {{ payload.orbit }}</p>
+          <hr>
+        </div>
       </div>
 
       <div *ngSwitchCase="'links'">
         <h3>Links</h3>
-        <p>Placeholder for wikipedia and youtube links etc.</p>
+        <ul>
+          <li *ngIf="launch.links.webcast; else noWebcast">
+            Webcast:
+            <a target="_blank" [href]="launch.links.webcast">{{ launch.links.webcast }}</a>
+          </li>
+          <ng-template #noWebcast>
+            <li>Webcast: No webcast for this flight</li>
+          </ng-template>
+
+          <li *ngIf="launch.links.article; else noArticle">
+            Article:
+            <a target="_blank" [href]="launch.links.article">{{ launch.links.article }}</a>
+          </li>
+          <ng-template #noArticle>
+            <li>Article: No article for this flight</li>
+          </ng-template>
+
+          <li *ngIf="launch.links.wikipedia; else noWiki">
+            Wikipedia:
+            <a target="_blank" [href]="launch.links.wikipedia">{{ launch.links.wikipedia }}</a>
+          </li>
+          <ng-template #noWiki>
+            <li>Wikipedia: No Wikipedia entry for this flight</li>
+          </ng-template>
+        </ul>
       </div>
 
     </ng-container>

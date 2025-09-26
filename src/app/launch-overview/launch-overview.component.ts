@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { Router } from '@angular/router';
 import {LaunchService} from '../service/launch.service';
-import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -29,7 +29,7 @@ export class LaunchOverviewComponent {
 
   ngOnInit() {
     this.launchService.getLaunches().subscribe(data => {
-      this.launches = data;
+      this.launches = data.slice(0, 12);
       this.launches.forEach(l => {
         this.launchService.getRocket(l.rocket).subscribe(rocketData => {
           l.rocketName = rocketData.name;
@@ -41,6 +41,8 @@ export class LaunchOverviewComponent {
       });
     });
   }
+
+
 
   filteredLaunches() {
     if (!this.searchTerm && !this.searchYear) {
@@ -73,4 +75,6 @@ export class LaunchOverviewComponent {
     this.router.navigate(['/details', launch.id]);
     console.log('Go to Details View');
   }
+
+
 }
