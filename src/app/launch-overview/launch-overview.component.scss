@@ -25,7 +25,7 @@ section {
   padding: 20px 10%;
 }
 
-.launches__details {
+.launches__stats {
   font-size: 12px;
   color: gray;
 }
@@ -59,16 +59,17 @@ section {
   border: 1px solid gray;
 }
 
-.launches__status--reflight {
+.launches__status--reflight{
   background-color: white;
   border: 1px solid gray;
 }
+
 .launches__status--upcoming {
   background-color: #cca8ff;
 }
 
 
-.search{
+.search {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -79,7 +80,8 @@ section {
   box-shadow: -10px 10px 15px #c5c5c5;
   margin-bottom: 20px;
 }
-#s-name, #s-year, #s-status, #s-sort, #s-fav{
+
+#s-name, #s-year, #s-status, #s-sort, #s-fav {
   width: 110px;
   border-width: 1px;
   background-color: #fbfbfb;
@@ -88,14 +90,49 @@ section {
   color: black;
   margin-top: 10px;
 }
-#s-sort{
+
+#s-sort {
   width: 140px;
 }
 
-.search label{
+.search label {
   font-size: 14px;
 }
 
-.launches__more{
-
+.entry__img {
+  width: auto;
+  margin: 30px 0 0 50px;
 }
+.entry__content{
+  width: 60%;
+}
+
+.entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.launches__favorite{
+  width: auto;
+  display: flex;
+  align-items: center
+}
+
+.launches__favorite img{
+  margin: 5px;
+}
+
+.launches__details{
+  box-shadow: -3px 3px 5px #c5c5c5;
+  background: #a4e7ff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+.launches__details:hover{
+  box-shadow: -3px 3px 5px #c5c5c5;
+  background: #3598ff;
+}
+

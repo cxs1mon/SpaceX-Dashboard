@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {LaunchService} from '../service/launch.service';
 import {DatePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -18,6 +18,7 @@ import {FormsModule} from '@angular/forms';
 export class LaunchOverviewComponent {
   title = 'spacex-dashboard';
   launches: any[] = [];
+  favorites: any[] = [];
   searchTerm: string = '';
   searchYear: string = '';
   searchSort: string = 'asc';
@@ -29,7 +30,7 @@ export class LaunchOverviewComponent {
 
   ngOnInit() {
     this.launchService.getLaunches().subscribe(data => {
-      this.launches = data.slice(0, 12);
+      this.launches = data;
       this.launches.forEach(l => {
         this.launchService.getRocket(l.rocket).subscribe(rocketData => {
           l.rocketName = rocketData.name;
@@ -40,8 +41,11 @@ export class LaunchOverviewComponent {
         });
       });
     });
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      this.favorites = JSON.parse(storedFavorites);
+    }
   }
-
 
 
   filteredLaunches() {
@@ -76,5 +80,18 @@ export class LaunchOverviewComponent {
     console.log('Go to Details View');
   }
 
+  toggleFavorites(launch: any) {
+    const index = this.favorites.findIndex(fav => fav.id === launch.id);
+    if (index > -1) {
+      this.favorites.splice(index, 1);
+    } else {
+      this.favorites.push(launch);
+    }
+    console.log(this.favorites);
+    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+  }
 
+  isFavorite(launch: any): boolean {
+    return this.favorites.some(fav => fav.id === launch.id);
+  }
 }

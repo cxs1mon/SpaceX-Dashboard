@@ -40,17 +40,17 @@
     <button class="tabs__button" (click)="setTab('links')" [class.active]="activeTab === 'links'">Links</button>
   </nav>
 
-  <div class="tab-content">
+  <div class="tabs__content">
     <ng-container [ngSwitch]="activeTab">
 
-      <div *ngSwitchCase="'overview'">
+      <div *ngSwitchCase="'overview'" class="tabs__overview">
         <h3>Übersicht</h3>
         <p>{{ launch.details || 'No Information found about this flight.' }}</p>
       </div>
 
-      <div *ngSwitchCase="'payloads'">
+      <div *ngSwitchCase="'payloads'" class="tabs__payloads">
         <h3>Payloads</h3>
-        <div *ngFor="let payload of payloads" class="payload-card">
+        <div *ngFor="let payload of payloads" class="payloads__card">
           <p>{{payload.name}}</p>
           <p>Type: {{ payload.type }}</p>
           <p *ngFor="let n of payload.nationalities">Nationality: {{ n }}</p>
@@ -59,9 +59,9 @@
         </div>
       </div>
 
-      <div *ngSwitchCase="'links'">
+      <div *ngSwitchCase="'links'" class="tabs__links">
         <h3>Links</h3>
-        <ul>
+        <ul class="tabs__links-list">
           <li *ngIf="launch.links.webcast; else noWebcast">
             Webcast:
             <a target="_blank" [href]="launch.links.webcast">{{ launch.links.webcast }}</a>

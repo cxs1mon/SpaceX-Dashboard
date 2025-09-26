@@ -53,13 +53,16 @@ section {
   margin: 20px 10px 5px 0;
   padding: 10px;
   border-radius: 5px;
-  background: #e0ebf0;
+  background: #a4e7ff;
   border: none;
   font-weight: 700;
   cursor: pointer;
 }
 .tabs__button.active {
   box-shadow: -3px 3px 5px #c5c5c5;
-  background: #a4e7ff;
+  background: #3598ff;
+}
 
+.tabs__links-list li a{
+  color: blue;
 }
