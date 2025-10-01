@@ -12,15 +12,17 @@
   <div class="search">
     <p>
       <label for="s-name">Suche</label> <br>
-      <input id="s-name" type="text" [(ngModel)]="searchTerm" placeholder="z.B. Starlink"/>
+      <input id="s-name" type="text" [(ngModel)]="searchTerm" (ngModelChange)="onFilterChange()"
+             placeholder="z.B. Starlink"/>
     </p>
     <p>
       <label for="s-year">Jahr</label> <br>
-      <input id="s-year" type="number" [(ngModel)]="searchYear" placeholder="z.B. 1997"/>
+      <input id="s-year" type="number" [(ngModel)]="searchYear" (ngModelChange)="onFilterChange()"
+             placeholder="z.B. 1997"/>
     </p>
     <p>
       <label for="s-status">Status</label> <br>
-      <select id="s-status" [(ngModel)]="searchStatus">
+      <select id="s-status" [(ngModel)]="searchStatus" (ngModelChange)="onFilterChange()">
         <option value="all" selected>Alle</option>
         <option value="success">Success</option>
         <option value="failure">Failure</option>
@@ -29,21 +31,21 @@
     </p>
     <p>
       <label for="s-sort">Sortierung Datum</label> <br>
-      <select id="s-sort" [(ngModel)]="searchSort" (change)="onSortChange()">
+      <select id="s-sort" [(ngModel)]="searchSort" (change)="onSortChange()" (ngModelChange)="onFilterChange()">
         <option value="asc">Aufsteigend</option>
         <option value="desc">Absteigend</option>
       </select>
     </p>
     <p>
       <label for="s-fav">Favoriten</label> <br>
-      <select id="s-fav" [(ngModel)]="searchFavorite">
+      <select id="s-fav" [(ngModel)]="searchFavorite" (ngModelChange)="onFilterChange()">
         <option value="all">Alle</option>
         <option value="favorites">Favoriten</option>
       </select>
     </p>
   </div>
   <div class="launches">
-    <div *ngFor="let l of filteredLaunches()" class="launches__card">
+    <div *ngFor="let l of visibleLaunches()" class="launches__card">
       <p class="launches__name">{{ l.name }}</p>
       <p class="launches__stats">{{ l.rocketName || 'lädt...' }} &#8226; {{ l.launchpadName || 'lädt...' }}
         &#8226; {{ l.launchpadLocation || 'lädt...' }} &#8226; {{
@@ -76,8 +78,8 @@
           <p>Add favorite</p>
         </div>
       </ng-template>
-
       <button (click)="goToDetailsView(l)" class="launches__details">Details</button>
     </div>
   </div>
+  <button (click)="showMoreLaunches()" class="overview__more" id="showMoreBtn">load more ...</button>
 </section>

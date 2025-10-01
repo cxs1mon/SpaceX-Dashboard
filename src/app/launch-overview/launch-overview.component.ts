@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {LaunchService} from '../service/launch.service';
 import {DatePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {max} from 'rxjs';
 
 @Component({
   selector: 'launch-overview',
@@ -24,6 +25,8 @@ export class LaunchOverviewComponent {
   searchSort: string = 'asc';
   searchStatus = 'all';
   searchFavorite = 'all';
+  page = 1;
+  pageSize = 9;
 
   private service = inject(LaunchService)
 
@@ -31,8 +34,14 @@ export class LaunchOverviewComponent {
   }
 
   ngOnInit() {
+    this.loadLaunches();
+    this.loadFavorites();
+  }
+
+  private loadLaunches() {
     this.launchService.getLaunches().subscribe(data => {
       this.launches = data;
+
       this.launches.forEach(l => {
         this.launchService.getRocket(l.rocket).subscribe(rocketData => {
           l.rocketName = rocketData.name;
@@ -42,13 +51,23 @@ export class LaunchOverviewComponent {
           l.launchpadLocation = launchpadData.region;
         });
       });
+      this.updateShowMoreBtnVisibility();
     });
+  }
+
+  private loadFavorites() {
     const storedFavorites = localStorage.getItem('favorites');
     if (storedFavorites) {
       this.favorites = JSON.parse(storedFavorites);
     }
   }
 
+  visibleLaunches() {
+    const filtered = this.filteredLaunches();
+    const start = 0;
+    const end = this.page * this.pageSize;
+    return filtered.slice(start, end);
+  }
 
   filteredLaunches() {
     return this.launches.filter(l => {
@@ -94,4 +113,35 @@ export class LaunchOverviewComponent {
   isFavorite(launch: any): boolean {
     return this.favorites.some(fav => fav.id === launch.id);
   }
+
+  showMoreLaunches() {
+    const numOfFlights = this.filteredLaunches().length;
+    const maxPages = Math.ceil(numOfFlights / this.pageSize);
+
+    console.log(`Page ${this.page}`);
+    console.log(`Num of flights ${numOfFlights}`);
+    console.log(`Max Pages ${maxPages}`);
+
+    if (this.page < maxPages) {
+      this.page++;
+    }
+
+    this.updateShowMoreBtnVisibility();
+  }
+
+  updateShowMoreBtnVisibility() {
+    const numOfFlights = this.filteredLaunches().length;
+    const maxPages = Math.ceil(numOfFlights / this.pageSize);
+
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    if (showMoreBtn) {
+      showMoreBtn.style.visibility = this.page >= maxPages ? 'hidden' : 'visible';
+    }
+  }
+
+  onFilterChange() {
+    this.page = 1;
+    this.updateShowMoreBtnVisibility();
+  }
+
 }
