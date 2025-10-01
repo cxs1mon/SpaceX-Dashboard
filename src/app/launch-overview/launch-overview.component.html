@@ -20,11 +20,11 @@
     </p>
     <p>
       <label for="s-status">Status</label> <br>
-      <select id="s-status">
-        <option>Alle</option>
-        <option>Success</option>
-        <option>Failure</option>
-        <option>Upcoming</option>
+      <select id="s-status" [(ngModel)]="searchStatus">
+        <option value="all" selected>Alle</option>
+        <option value="success">Success</option>
+        <option value="failure">Failure</option>
+        <option value="upcoming">Upcoming</option>
       </select>
     </p>
     <p>
@@ -59,9 +59,7 @@
           Failed
         </p>
         <p *ngIf="l.success === null && l.upcoming === true" class="launches__status launches__status--upcoming">
-          <span *ngIf="l.upcoming">Upcoming</span>
-        </p>
-        <p *ngIf="l.success === null && l.upcoming === null" class="launches__status launches__status--upcoming">
+          Upcoming
         </p>
         <p class="launches__status launches__status--flight">#Flight{{ l.flight_number || 'lädt...' }}</p>
       </div>

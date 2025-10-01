@@ -22,6 +22,7 @@ export class LaunchOverviewComponent {
   searchTerm: string = '';
   searchYear: string = '';
   searchSort: string = 'asc';
+  searchStatus = 'all';
 
   private service = inject(LaunchService)
 
@@ -49,22 +50,19 @@ export class LaunchOverviewComponent {
 
 
   filteredLaunches() {
-    if (!this.searchTerm && !this.searchYear) {
-      return this.launches;
-    } else if (this.searchTerm && !this.searchYear) {
-      return this.launches.filter(l =>
-        l.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    } else if (!this.searchTerm && this.searchYear) {
-      return this.launches.filter(l =>
-        l.date_utc.includes(this.searchYear)
-      );
-    } else {
-      return this.launches.filter(l =>
-        l.name.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-        l.date_utc.includes(this.searchYear)
-      );
-    }
+    return this.launches.filter(l => {
+      const matchesTerm = !this.searchTerm || l.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesYear = !this.searchYear || l.date_utc.includes(this.searchYear);
+      const matchesStatus = this.searchStatus === 'all' || this.getStatus(l) === this.searchStatus;
+      return matchesTerm && matchesYear && matchesStatus;
+    });
+  }
+
+  getStatus(l: any): string {
+    if (l.success === true) return 'success';
+    if (l.success === false) return 'failure';
+    if (l.success === null && l.upcoming === true) return 'upcoming';
+    return 'unknown';
   }
 
   onSortChange() {
