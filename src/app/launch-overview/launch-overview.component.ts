@@ -23,6 +23,7 @@ export class LaunchOverviewComponent {
   searchYear: string = '';
   searchSort: string = 'asc';
   searchStatus = 'all';
+  searchFavorite = 'all';
 
   private service = inject(LaunchService)
 
@@ -54,7 +55,8 @@ export class LaunchOverviewComponent {
       const matchesTerm = !this.searchTerm || l.name.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesYear = !this.searchYear || l.date_utc.includes(this.searchYear);
       const matchesStatus = this.searchStatus === 'all' || this.getStatus(l) === this.searchStatus;
-      return matchesTerm && matchesYear && matchesStatus;
+      const matchesFavorite = this.searchFavorite === 'all' || this.isFavorite(l);
+      return matchesTerm && matchesYear && matchesStatus && matchesFavorite;
     });
   }
 

@@ -36,9 +36,9 @@
     </p>
     <p>
       <label for="s-fav">Favoriten</label> <br>
-      <select id="s-fav">
-        <option>Alle</option>
-        <option>Favoriten</option>
+      <select id="s-fav" [(ngModel)]="searchFavorite">
+        <option value="all">Alle</option>
+        <option value="favorites">Favoriten</option>
       </select>
     </p>
   </div>
