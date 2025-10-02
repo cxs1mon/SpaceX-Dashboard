@@ -3,7 +3,6 @@ import {HeaderComponent} from './header/header.component';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs';
 
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],

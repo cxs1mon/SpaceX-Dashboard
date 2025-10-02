@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {LaunchService} from '../service/launch.service';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {SkeletonComponent} from '../skeleton/skeleton.component';
 
 @Component({
   selector: 'launch-overview',
@@ -10,7 +11,8 @@ import {FormsModule} from '@angular/forms';
     NgForOf,
     DatePipe,
     NgIf,
-    FormsModule
+    FormsModule,
+    SkeletonComponent
   ],
   templateUrl: './launch-overview.component.html',
   styleUrl: './launch-overview.component.scss'
@@ -26,6 +28,7 @@ export class LaunchOverviewComponent {
   searchFavorite = 'all';
   page = 1;
   pageSize = 9;
+  loading: boolean = true;
 
   private service = inject(LaunchService)
 
@@ -38,20 +41,24 @@ export class LaunchOverviewComponent {
   }
 
   private loadLaunches() {
-    this.launchService.getLaunches().subscribe(data => {
-      this.launches = data;
+      this.launchService.getLaunches().subscribe(data => {
+        this.launches = data;
 
-      this.launches.forEach(l => {
-        this.launchService.getRocket(l.rocket).subscribe(rocketData => {
-          l.rocketName = rocketData.name;
+        this.launches.forEach(l => {
+          this.launchService.getRocket(l.rocket).subscribe(rocketData => {
+            l.rocketName = rocketData.name;
+          });
+          this.launchService.getLaunchpad(l.launchpad).subscribe(launchpadData => {
+            l.launchpadName = launchpadData.name;
+            l.launchpadLocation = launchpadData.region;
+          });
         });
-        this.launchService.getLaunchpad(l.launchpad).subscribe(launchpadData => {
-          l.launchpadName = launchpadData.name;
-          l.launchpadLocation = launchpadData.region;
-        });
+        this.updateShowMoreBtnVisibility();
       });
-      this.updateShowMoreBtnVisibility();
-    });
+      // extra timeout damit man es sieht auf dem screen
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   }
 
   private loadFavorites() {

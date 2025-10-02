@@ -1,0 +1,43 @@
+.skeleton {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap
+}
+
+.loading {
+  height: 170px;
+  width: 100%;
+  min-width: 180px;
+  background-color: #EEEBEE;
+  border-radius: 12px;
+  box-shadow: -10px 10px 15px #c5c5c5;
+  position: relative;
+  overflow: hidden;
+  margin: 10px 0;
+  @media (min-width: 426px) {
+    height: 180px;
+    width: 30%;
+    min-width: 180px;
+  }
+}
+
+.loading::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -150%;
+  top: 0;
+  height: 100%;
+  width: 80%;
+  background: linear-gradient(to right, transparent 0%, #DAD8DA 50%, transparent 100%);
+  animation: load 1s infinite;
+}
+
+@keyframes load {
+  from {
+    left: -150%;
+  }
+  to {
+    left: 100%;
+  }
+}

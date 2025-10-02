@@ -1,4 +1,5 @@
 .header {
+  z-index: 1;
   display: flex;
   flex-direction: row;
   margin: 5px 5%;
@@ -21,15 +22,21 @@
   margin: 10px 10px 10px 0;
 }
 :host-context(html.dark)  .header{
-  margin: 5px 5%;
+  padding: 5px 5%;
+  opacity: 1;
   @media (min-width: 426px) {
     margin: 5px 10%;
+    padding: 5px 0;
   }
 }
 
 :host-context(html.light)  .header{
   padding: 5px 5%;
   margin: 0;
+  background-color: #fbfbfb;
+  position: fixed;
+  width: 100%;
+  opacity: 0.98;
   @media (min-width: 426px) {
   }
 }
@@ -37,4 +44,6 @@
 :host-context(html.dark) .header__logo {
   background: linear-gradient(135deg, rgba(42, 206, 239, 1) 23%, rgba(164, 141, 250, 1) 86%);
 }
+
+
 

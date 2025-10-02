@@ -44,7 +44,7 @@
 
 <section class="overview">
   <h2 class="overview__title">Launches</h2>
-  <div class="launches">
+  <div class="launches" *ngIf="!loading; else skeleton">
     <div *ngFor="let l of visibleLaunches()" class="launches__card">
       <p class="launches__name">{{ l.name }}</p>
       <p class="launches__stats">{{ l.rocketName || 'lädt...' }} &#8226; {{ l.launchpadName || 'lädt...' }}
@@ -83,6 +83,10 @@
         </ng-template>
       </div>
     </div>
+    <button (click)="showMoreLaunches()" class="overview__more" id="showMoreBtn">load more ...</button>
   </div>
-  <button (click)="showMoreLaunches()" class="overview__more" id="showMoreBtn">load more ...</button>
+  <ng-template #skeleton>
+    <skeleton-component></skeleton-component>
+  </ng-template>
 </section>
+
