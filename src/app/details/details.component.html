@@ -1,7 +1,6 @@
 <section class="details">
   <button class="details__back-btn" (click)="goToDetailsView()">< Back</button>
-  <h1>Details View</h1>
-  <h2>{{ launch.name || 'lädt...' }}</h2>
+  <h2 class="details__title">{{ launch.name || 'lädt...' }}</h2>
   <p class="launches__details">{{ rocket.name || 'lädt...' }} &#8226; {{ launchpad.name || 'lädt...' }}
     &#8226; {{ launchpad.region || 'lädt...' }} &#8226; {{
       launch.date_utc
@@ -22,7 +21,11 @@
     </p>
     <p class="launches__status launches__status--flight">#Flight{{ launch.flight_number || 'lädt...' }}</p>
 
-    <p class="launches__status launches__status--payloads">Payloads: {{ launch.payloads.length || 'lädt...' }}</p>
+    <p class="launches__status launches__status--payloads" *ngIf="launch.payloads.length; else noPayloads">
+      Payloads: {{ launch.payloads.length || 'lädt...' }}</p>
+    <ng-template #noPayloads>
+      <p class="launches__status launches__status--payloads" *ngIf="launch.payloads.length == 0">Payloads: 0</p>
+    </ng-template>
 
     <p *ngIf="launch.cores[0].reused === true" class="launches__status launches__status--reflight">
       Reflight
@@ -50,13 +53,20 @@
 
       <div *ngSwitchCase="'payloads'" class="tabs__payloads">
         <h3>Payloads</h3>
-        <div *ngFor="let payload of payloads" class="payloads__card">
-          <p>{{payload.name}}</p>
-          <p>Type: {{ payload.type }}</p>
-          <p *ngFor="let n of payload.nationalities">Nationality: {{ n }}</p>
-          <p>Orbit: {{ payload.orbit }}</p>
-          <hr>
-        </div>
+
+        <ng-container *ngIf="payloads && payloads.length > 0; else noPayloadContent">
+          <div *ngFor="let payload of payloads" class="payloads__card">
+            <p>{{ payload.name }}</p>
+            <p>Type: {{ payload.type }}</p>
+            <p *ngFor="let n of payload.nationalities">Nationality: {{ n }}</p>
+            <p>Orbit: {{ payload.orbit }}</p>
+            <hr *ngIf="payloads.length > 1">
+          </div>
+        </ng-container>
+
+        <ng-template #noPayloadContent>
+          <p>No Payloads for this flight</p>
+        </ng-template>
       </div>
 
       <div *ngSwitchCase="'links'" class="tabs__links">
