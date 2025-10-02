@@ -1,9 +1,17 @@
-
-html{
+html {
   font-family: "Inter", sans-serif;
   background-color: #fbfbfb;
 }
-body{
+
+body {
   margin: 0;
 }
 
+p {
+  font-size: 12px;
+}
+
+.dark {
+  background-color: #0b1220;
+  color: #ededed;
+}

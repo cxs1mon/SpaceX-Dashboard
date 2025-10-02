@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {LaunchService} from '../service/launch.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'custom-header',
@@ -8,4 +10,9 @@ import {Component} from '@angular/core';
 })
 export class HeaderComponent {
 
+  constructor(private router: Router) {};
+
+  navigateHome() {
+      this.router.navigate(['/']);
+  }
 }

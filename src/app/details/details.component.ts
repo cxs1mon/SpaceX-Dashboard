@@ -28,7 +28,6 @@ export class DetailsComponent {
 
   activeTab: 'overview' | 'payloads' | 'links' = 'overview';
 
-
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {

@@ -1,68 +1,100 @@
 section {
-  padding: 20px 10%;
+  padding: 20px 5%;
+  @media (min-width: 426px) {
+    padding: 20px 10%;
+  }
 }
 
-.launches__details, .details__back-btn  {
+.launches__details, .details__back-btn {
   font-size: 12px;
-  color: gray;
+  margin-left: 5px;
+  padding: 0;
+  color: #ededed;
 }
-.details__back-btn{
+
+.details__back-btn {
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
 
-.details__launches{
+.details__launches {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  width: 50%;
   justify-content: flex-start;
 }
 
 .launches__status {
   border-radius: 15px;
-  font-size: 12px;
   width: fit-content;
   padding: 5px;
   margin: 5px;
+  border: 1px solid #424242;
+  font-weight: 700;
+  font-size: 11px;
 }
 
-
-
 .launches__status--successful {
-  background-color: #d9ffbe;
+  background-color: #143437;
 }
 
 .launches__status--unsuccessful {
-  background-color: #ffa1a1;
+  background-color: #342130;
 }
 
 .launches__status--flight,
 .launches__status--payloads,
 .launches__status--reflight {
-  background-color: white;
-  border: 1px solid gray;
+  background-color: transparent;
 }
 
 .launches__status--upcoming {
-  background-color: #cca8ff;
+  background-color: #1d1748;
 }
 
 .tabs__button {
   margin: 20px 10px 5px 0;
   padding: 10px;
   border-radius: 5px;
-  background: #a4e7ff;
+  background: #23243a;
   border: none;
   font-weight: 700;
   cursor: pointer;
-}
-.tabs__button.active {
-  box-shadow: -3px 3px 5px #c5c5c5;
-  background: #3598ff;
+  color: #c1c1c1;
+
 }
 
-.tabs__links-list li a{
+.tabs__button.active {
+  color: black;
+  background: linear-gradient(135deg, rgba(42, 206, 239, 1) 23%, rgba(164, 141, 250, 1) 86%);
+}
+
+.tabs__links-list li a {
   color: blue;
+}
+
+:host-context(html.dark) .tabs__links-list li a{
+  color: #a2a2f4;
+}
+
+
+.tabs__content {
+  border: 1px solid #1f2a38;
+  border-radius: 20px;
+  background: #101827;
+  margin-top: 10px;
+
+}
+
+.tabs__content div {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.tabs__content div h3{
+  margin: 10px 0 0 0;
+}
+
+.tabs__links-list{
+  margin-top: 5px;
 }

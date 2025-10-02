@@ -1,20 +1,40 @@
 .header {
   display: flex;
-  flex-direction: column;
-  background-color: #fdfefe;
-  box-shadow: 0px 2px 3px black;
-  padding: 20px 10%;
-}
-
-.header__logo {
-  display: block;
-  max-width: 230px;
-  width: auto;
-  height: auto;
+  flex-direction: row;
+  margin: 5px 5%;
+  align-items: center;
+  border-bottom: #c5c5c5 1px solid;
 }
 
 .header__title {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 900;
+}
+
+.header__logo {
+  height: 30px;
+  width: 30px;
+  background: linear-gradient(to top, #7640EC, #69a8f3),
+  linear-gradient(to right, #0c56ca, #5baef8);
+  background-blend-mode: hue;
+  border-radius: 7px;
+  margin: 10px 10px 10px 0;
+}
+:host-context(html.dark)  .header{
+  margin: 5px 5%;
+  @media (min-width: 426px) {
+    margin: 5px 10%;
+  }
+}
+
+:host-context(html.light)  .header{
+  padding: 5px 5%;
+  margin: 0;
+  @media (min-width: 426px) {
+  }
+}
+
+:host-context(html.dark) .header__logo {
+  background: linear-gradient(135deg, rgba(42, 206, 239, 1) 23%, rgba(164, 141, 250, 1) 86%);
 }
 

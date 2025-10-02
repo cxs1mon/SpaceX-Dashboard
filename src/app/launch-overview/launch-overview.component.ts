@@ -1,9 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {LaunchService} from '../service/launch.service';
-import {DatePipe, NgForOf, NgIf, SlicePipe} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {max} from 'rxjs';
 
 @Component({
   selector: 'launch-overview',
@@ -96,7 +95,6 @@ export class LaunchOverviewComponent {
 
   goToDetailsView(launch: any) {
     this.router.navigate(['/details', launch.id]);
-    console.log('Go to Details View');
   }
 
   toggleFavorites(launch: any) {
