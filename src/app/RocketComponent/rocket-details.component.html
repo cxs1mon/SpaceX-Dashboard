@@ -1,0 +1,16 @@
+<details-view
+  [title]='rocket.name'
+  [stats1]='rocket.company'
+  [stats2]='rocket.country'
+  [stats3]='rocket.first_flight'
+  [stats4]='rocket.success_rate_pct'
+  [infoBtn1]='rocketActive'
+  [description]="rocket.description"
+  [activeTab]="activeTab"
+  [links]="[rocket.wikipedia]"
+
+  (setTab)="setTab($event)"
+  (goBack)="goBackToLaunch()"
+>
+
+</details-view>

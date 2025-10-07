@@ -1,0 +1,17 @@
+<details-view
+  [title]='launch.name'
+  [stats1]='rocket.name'
+  [stats2]='launchpad.name'
+  [stats3]='launchpad.region'
+  [stats4]='launch.date_utc'
+  [infoBtn1]="launchStatus"
+  [description]="launch.details"
+  [activeTab]="activeTab"
+  [links]="[launch.links.wikipedia, launch.links.article, launch.links.webcast]"
+
+  (rocketDetails)="goToRocketDetails()"
+  (goBack)="goToOverview()"
+  (setTab)="setTab($event)"
+>
+
+</details-view>

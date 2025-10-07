@@ -1,25 +1,23 @@
 <section class="details">
-  <button class="details__back-btn" (click)="goToDetailsView()">< Back</button>
-  <h2 class="details__title">{{ launch.name || 'lädt...' }}</h2>
-  <p class="launches__details">{{ rocket.name || 'lädt...' }} &#8226; {{ launchpad.name || 'lädt...' }}
-    &#8226; {{ launchpad.region || 'lädt...' }} &#8226; {{
-      launch.date_utc
-        ? (launch.date_utc | date:'yyyy-MM-dd HH:mm':'UTC') + ' UTC'
-        : 'null'
-    }} </p>
+  <button class="details__back-btn" (click)="onBackClick()">< Back</button>
+
+  <h2 class="details__title">
+    {{ title }}
+  </h2>
+  <p class="launches__details">
+    {{ stats1 }} &#8226;
+    {{ stats2 }} &#8226;
+    {{ stats3 }} &#8226;
+    {{ stats4 }}</p>
+
+
   <div class="details__launches">
-    <p *ngIf="launch.success === true" class="launches__status launches__status--successful">
-      Success
+    <p [ngSwitch]="infoBtn1" class="launches__status">
+      <span *ngSwitchCase="'success'" class="launches__status--successful">Success</span>
+      <span *ngSwitchCase="'failure'" class="launches__status--unsuccessful">Failure</span>
+      <span *ngSwitchCase="'upcoming'" class="launches__status--upcoming">Upcoming</span>
     </p>
-    <p *ngIf="launch.success === false" class="launches__status launches__status--unsuccessful">
-      Failure
-    </p>
-    <p *ngIf="launch.success === null && launch.upcoming === true" class="launches__status launches__status--upcoming">
-      <span *ngIf="launch.upcoming">Upcoming</span>
-    </p>
-    <p *ngIf="launch.success === null && launch.upcoming === null" class="launches__status launches__status--upcoming">
-    </p>
-    <p class="launches__status launches__status--flight">#Flight{{ launch.flight_number || 'lädt...' }}</p>
+    <!--p class="launches__status launches__status--flight">#Flight{{ launch.flight_number || 'lädt...' }}</p>
 
     <p class="launches__status launches__status--payloads" *ngIf="launch.payloads.length; else noPayloads">
       Payloads: {{ launch.payloads.length || 'lädt...' }}</p>
@@ -32,47 +30,47 @@
     </p>
     <p *ngIf="launch.cores[0].reused === false" class="launches__status launches__status--reflight">
       Not Reflight
-    </p>
+    </p-->
   </div>
 
   <nav class="tabs">
-    <button class="tabs__button" (click)="setTab('overview')" [class.active]="activeTab === 'overview'">Übersicht
+    <button class="tabs__button"
+            (click)="onSetTabClick('overview')"
+            [class.active]="activeTab === 'overview'">
+      Übersicht
     </button>
-    <button class="tabs__button" (click)="setTab('payloads')" [class.active]="activeTab === 'payloads'">Payloads
+
+    <button class="tabs__button"
+            (click)="onSetTabClick('payloads')"
+            [class.active]="activeTab === 'payloads'">
+      Payloads
     </button>
-    <button class="tabs__button" (click)="setTab('links')" [class.active]="activeTab === 'links'">Links</button>
+
+    <button class="tabs__button"
+            (click)="onSetTabClick('links')"
+            [class.active]="activeTab === 'links'">
+      Links
+    </button>
   </nav>
 
   <div class="tabs__content">
     <ng-container [ngSwitch]="activeTab">
-
-      <div *ngSwitchCase="'overview'" class="tabs__overview">
+      <div *ngSwitchCase="'overview'">
         <h3>Übersicht</h3>
-        <p>{{ launch.details || 'No Information found about this flight.' }}</p>
+        <p>{{ description || 'No Description found' }}</p>
       </div>
-
-      <div *ngSwitchCase="'payloads'" class="tabs__payloads">
+      <div *ngSwitchCase="'payloads'">
         <h3>Payloads</h3>
 
-        <ng-container *ngIf="payloads && payloads.length > 0; else noPayloadContent">
-          <div *ngFor="let payload of payloads" class="payloads__card">
-            <p>{{ payload.name }}</p>
-            <p>Type: {{ payload.type }}</p>
-            <p *ngFor="let n of payload.nationalities">Nationality: {{ n }}</p>
-            <p>Orbit: {{ payload.orbit }}</p>
-            <hr *ngIf="payloads.length > 1">
-          </div>
-        </ng-container>
-
-        <ng-template #noPayloadContent>
-          <p>No Payloads for this flight</p>
-        </ng-template>
       </div>
-
-      <div *ngSwitchCase="'links'" class="tabs__links">
+      <div *ngSwitchCase="'links'">
         <h3>Links</h3>
         <ul class="tabs__links-list">
-          <li *ngIf="launch.links.webcast; else noWebcast">
+          <li *ngFor="let link of links">
+            <a *ngIf="link" [href]="link" target="_blank">{{ link }}</a>
+            <span *ngIf="!link">No link available</span>
+          </li>
+          <!--li *ngIf="launch.links.webcast; else noWebcast">
             Webcast:
             <a target="_blank" [href]="launch.links.webcast">{{ launch.links.webcast }}</a>
           </li>
@@ -94,10 +92,14 @@
           </li>
           <ng-template #noWiki>
             <li>Wikipedia: No Wikipedia entry for this flight</li>
-          </ng-template>
+          </ng-template-->
         </ul>
       </div>
-
     </ng-container>
+
   </div>
+  <div class="rocket__details">
+    <button (click)="onRocketDetailsClick()" class="rocket__button">Rocket Details</button>
+  </div>
+
 </section>

@@ -1,16 +1,17 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {LaunchService} from '../service/launch.service';
+
 
 @Component({
   selector: 'details-view',
   imports: [
-    DatePipe,
     NgIf,
     NgSwitch,
     NgSwitchCase,
-    NgForOf
+    NgForOf,
+    NgSwitchDefault
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -20,45 +21,37 @@ export class DetailsComponent {
   launchpad: any;
   rocket: any;
   payloads: any[] = [];
+  path: string = '';
+  id: string | null = null;
 
   private service = inject(LaunchService)
 
   constructor(private launchService: LaunchService, private route: ActivatedRoute, private router: Router) {
   }
 
-  activeTab: 'overview' | 'payloads' | 'links' = 'overview';
+  @Input() title!: string;
+  @Input() stats1!: string;
+  @Input() stats2!: string;
+  @Input() stats3!: string;
+  @Input() stats4!: string;
+  @Input() infoBtn1!: string;
+  @Input() description!: string;
+  @Input() activeTab: 'overview' | 'payloads' | 'links' = 'overview';
+  @Input() links: string[] = [];
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.launchService.getLaunchById(id).subscribe(data => {
-        this.launch = data;
-        console.log(this.launch);
-        this.launchService.getRocket(this.launch.rocket).subscribe(data => {
-          this.rocket = data;
-          console.log(data)
-        })
-        this.launchService.getLaunchpad(this.launch.launchpad).subscribe(data => {
-          this.launchpad = data;
-          console.log(data);
-        })
-        if (this.launch.payloads?.length) {
-          this.launch.payloads.forEach((payloadId: string) => {
-            this.launchService.getPayload(payloadId).subscribe(p => {
-              this.payloads.push(p);
-            });
-          });
-        }
-      })
-    }
+  @Output() rocketDetails = new EventEmitter<string>();
+  @Output() goBack = new EventEmitter<string>();
+  @Output() setTab = new EventEmitter<'overview' | 'payloads' | 'links'>();
+
+  onRocketDetailsClick() {
+    this.rocketDetails.emit();
   }
 
-  setTab(tab: 'overview' | 'payloads' | 'links') {
-    this.activeTab = tab;
+  onBackClick() {
+    this.goBack.emit();
   }
 
-  goToDetailsView() {
-    this.router.navigate(['/']);
-    console.log('Go to Details View');
+  onSetTabClick(tab: 'overview' | 'payloads' | 'links') {
+    this.setTab.emit(tab);
   }
 }

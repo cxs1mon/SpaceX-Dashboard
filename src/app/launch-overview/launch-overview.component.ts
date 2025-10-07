@@ -101,7 +101,7 @@ export class LaunchOverviewComponent {
   }
 
   goToDetailsView(launch: any) {
-    this.router.navigate(['/details', launch.id]);
+    this.router.navigate(['/details/launch', launch.id]);
   }
 
   toggleFavorites(launch: any) {
