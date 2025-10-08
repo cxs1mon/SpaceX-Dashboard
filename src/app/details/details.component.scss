@@ -64,7 +64,7 @@ section {
 
 }
 
-.tabs__button.active{
+.tabs__button.active {
   color: black;
   background: linear-gradient(135deg, rgba(42, 206, 239, 1) 23%, rgba(164, 141, 250, 1) 86%);
 }
@@ -73,7 +73,7 @@ section {
   color: blue;
 }
 
-:host-context(html.dark) .tabs__links-list li a{
+:host-context(html.dark) .tabs__links-list li a {
   color: #a2a2f4;
 }
 
@@ -83,7 +83,10 @@ section {
   border-radius: 20px;
   background: #101827;
   margin-top: 10px;
-
+  width: 100%;
+  @media (min-width: 426px) {
+    width: 69%;
+  }
 }
 
 .tabs__content div {
@@ -91,11 +94,42 @@ section {
   margin-left: 10px;
 }
 
-.tabs__content div h3{
+.tabs__content div h3 {
   margin: 10px 0 0 0;
 }
 
-.tabs__links-list{
+.tabs__links-list {
   margin-top: 5px;
   padding-left: 20px;
+}
+
+.rocket__details {
+  width: 100%;
+  border: 1px solid #1f2a38;
+  border-radius: 20px;
+  background: #101827;
+  margin-top: 10px;
+  padding: 5px 5px 10px 15px;
+  @media (min-width: 426px) {
+    width: 29%;
+  }
+}
+
+.rocket__details h4 {
+  margin: 10px 0 0 0;
+}
+
+.rocket__button {
+  background: linear-gradient(135deg, rgba(42, 206, 239, 1) 23%, rgba(164, 141, 250, 1) 86%);
+  border-radius: 20px;
+  border: none;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.details__box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
 }

@@ -2,7 +2,6 @@ import {Component, inject} from '@angular/core';
 import {DetailsComponent} from '../details/details.component';
 import {LaunchService} from '../service/launch.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DetailsService} from '../service/details.service';
 
 @Component({
   selector: 'launch-details',
@@ -21,29 +20,28 @@ export class LaunchDetails {
   success: boolean = true;
   launchStatus: "success" | "failure" | "upcoming" | "unknown" = "unknown";
   activeTab: 'overview' | 'payloads' | 'links' = 'overview';
+  links: {} = {};
+  payloadName:string = '';
 
   constructor(private launchService: LaunchService, private activeRoute: ActivatedRoute, private router: Router) {
   }
 
-  private service = inject(DetailsService)
+  private service = inject(LaunchService);
 
 
   ngOnInit() {
     this.id = this.activeRoute.snapshot.paramMap.get('id')!;
-    console.log("ID", this.id);
     // daten zu dem launch holen
     if (this.id) {
       this.launchService.getLaunchById(this.id).subscribe(data => {
         this.launch = data;
         this.launchStatus = this.getLaunchStatus(data);
-        console.log(this.launch);
         this.launchService.getRocket(this.launch.rocket).subscribe(data => {
           this.rocket = data;
-          console.log(this.rocket);
+          this.payloadName = this.rocket.second_stage.payloads.option_1;
         })
         this.launchService.getLaunchpad(this.launch.launchpad).subscribe(data => {
           this.launchpad = data;
-          console.log(data);
         })
         if (this.launch.payloads?.length) {
           this.launch.payloads.forEach((payloadId: string) => {
@@ -52,8 +50,15 @@ export class LaunchDetails {
             });
           });
         }
+        this.service.setLaunchId(this.id);
       })
     }
+    this.links = {
+      wikipedia: this.launch.links.wikipedia || 'No Wikipedia Link for this flight',
+      article: this.launch.links.article || 'No Article Link for this flight',
+      webcast: this.launch.links.webcast || 'No Webcast for this flight'
+    }
+
   }
 
   setTab(tab: 'overview' | 'payloads' | 'links') {
@@ -77,8 +82,6 @@ export class LaunchDetails {
   }
 
   goToRocketDetails() {
-    this.router.navigate(['/details/rocket/', '5e9d0d95eda69955f709d1eb']);
-    //console.log(rocket.id);
-    //console.log(rocket);
+    this.router.navigate(['/details/rocket/', this.rocket.id]);
   }
 }

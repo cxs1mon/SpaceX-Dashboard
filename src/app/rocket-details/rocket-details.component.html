@@ -1,13 +1,14 @@
 <details-view
+  path="rocket"
   [title]='rocket.name'
   [stats1]='rocket.company'
   [stats2]='rocket.country'
   [stats3]='rocket.first_flight'
-  [stats4]='rocket.success_rate_pct'
+  [stats4]='successRate'
   [infoBtn1]='rocketActive'
   [description]="rocket.description"
   [activeTab]="activeTab"
-  [links]="[rocket.wikipedia]"
+  [links]="links"
 
   (setTab)="setTab($event)"
   (goBack)="goBackToLaunch()"

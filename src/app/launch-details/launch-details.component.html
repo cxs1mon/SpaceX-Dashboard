@@ -1,4 +1,5 @@
 <details-view
+  path="launch"
   [title]='launch.name'
   [stats1]='rocket.name'
   [stats2]='launchpad.name'
@@ -7,7 +8,8 @@
   [infoBtn1]="launchStatus"
   [description]="launch.details"
   [activeTab]="activeTab"
-  [links]="[launch.links.wikipedia, launch.links.article, launch.links.webcast]"
+  [links] = "links"
+  [payloadName] = "payloadName"
 
   (rocketDetails)="goToRocketDetails()"
   (goBack)="goToOverview()"

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, TitleCasePipe} from '@angular/common';
 import {LaunchService} from '../service/launch.service';
 
 
@@ -11,7 +11,7 @@ import {LaunchService} from '../service/launch.service';
     NgSwitch,
     NgSwitchCase,
     NgForOf,
-    NgSwitchDefault
+    TitleCasePipe
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -21,7 +21,6 @@ export class DetailsComponent {
   launchpad: any;
   rocket: any;
   payloads: any[] = [];
-  path: string = '';
   id: string | null = null;
 
   private service = inject(LaunchService)
@@ -35,9 +34,11 @@ export class DetailsComponent {
   @Input() stats3!: string;
   @Input() stats4!: string;
   @Input() infoBtn1!: string;
-  @Input() description!: string;
+  @Input() description?: string;
   @Input() activeTab: 'overview' | 'payloads' | 'links' = 'overview';
-  @Input() links: string[] = [];
+  @Input() links:{[key:string]:string} = {};
+  @Input() path!: string;
+  @Input() payloadName?: string;
 
   @Output() rocketDetails = new EventEmitter<string>();
   @Output() goBack = new EventEmitter<string>();
@@ -54,4 +55,9 @@ export class DetailsComponent {
   onSetTabClick(tab: 'overview' | 'payloads' | 'links') {
     this.setTab.emit(tab);
   }
+
+  getLinkKeys(): string[] {
+    return Object.keys(this.links);
+  }
+
 }
